@@ -50,7 +50,7 @@ class AddDiaperForm extends Component {
     return (
       <Container>
         <Form onSubmit={this.handleSubmitDiaper}>
-          <Form.Group>
+          <Form.Group widths="equal">
             <Form.Input
               placeholder="Date"
               name="date"
@@ -64,7 +64,7 @@ class AddDiaperForm extends Component {
               onChange={this.handleChange}
             />
           </Form.Group>
-          <Form.Group>
+          <Form.Group widths="equal">
             <Form.Input
               placeholder="Type"
               name="type"
