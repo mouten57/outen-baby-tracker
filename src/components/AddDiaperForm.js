@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Container } from 'semantic-ui-react';
-import CustomCalendar from './CustomCalendar';
-import CustomTime from './CustomTime';
-import { Redirect } from 'react-router-dom';
 
 class AddDiaperForm extends Component {
   constructor(props) {
@@ -17,39 +14,11 @@ class AddDiaperForm extends Component {
     this.diaperRef = this.props.firebase.database().ref('diapers/');
   }
 
-  handleChangeDate = e => {
-    this.setState(
-      {
-        date: e.target.value
-      },
-      console.log(this.state)
-    );
-  };
-  handleChangeNotes = e => {
-    this.setState(
-      {
-        notes: e.target.value
-      },
-      console.log(this.state)
-    );
-  };
-  handleChangeType = e => {
-    this.setState(
-      {
-        type: e.target.value
-      },
-      console.log(this.state)
-    );
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value });
   };
 
-  add = (e, { value }) => {
-    let amount = this.state.amount;
-    if (this.state.expense === 'income') {
-      amount = Number(amount);
-    } else if (this.state.expense === 'expense') {
-      amount = Number(amount) * -1;
-    }
-
+  handleSubmitDiaper = () => {
     var submitData = {
       date: this.state.date,
       time: this.state.time,
@@ -57,72 +26,58 @@ class AddDiaperForm extends Component {
       notes: this.state.notes
     };
 
-    var newItemKey = this.diaperRef.push().key;
+    var newDiaperKey = this.diaperRef.push().key;
     var updates = {};
-    updates['/items/' + newItemKey] = submitData;
+    updates['/diapers/' + newDiaperKey] = submitData;
     if (
-      submitData.amount.length === 0 ||
-      submitData.description.length === 0 ||
-      submitData.expense === '' ||
-      submitData.category === ''
+      submitData.date === '' ||
+      submitData.time === '' ||
+      submitData.type === ''
     ) {
-      alert('One or more missing fields.');
-    } else if (isNaN(submitData.amount)) {
-      alert('Cost should be a number.');
-    } else if (!isNaN(submitData.description)) {
-      alert('Description should be text.');
+      alert('You have to fill out date/time/type.');
     } else {
       this.props.firebase
         .database()
         .ref()
         .update(updates);
+      this.props.history.push('/diapers');
     }
   };
 
   render() {
-    const { value } = this.state;
+    const { date, time, type, notes } = this.state;
 
     return (
-      <Container text>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Group widths="equal">
-            <Form.Field onChange={this.handleChangeDate}>
-              <label>Date</label>
-              <CustomCalendar />
-            </Form.Field>
-            <Form.Field>
-              <label>Time</label>
-              <CustomTime onChange={this.onChange} />
-            </Form.Field>
-            <Form.Group inline style={{ marginTop: '30px' }}>
-              <label>Type</label>
-              <Form.Radio
-                label="Poop"
-                value="poop"
-                checked={value === 'poop'}
-                onChange={this.handleChangeType}
-              />
-              <Form.Radio
-                label="Pee"
-                value="pee"
-                checked={value === 'pee'}
-                onChange={this.handleChangeType}
-              />
-              <Form.Radio
-                label="Both"
-                value="both"
-                checked={value === 'both'}
-                onChange={this.handleChangeType}
-              />
-            </Form.Group>
+      <Container>
+        <Form onSubmit={this.handleSubmitDiaper}>
+          <Form.Group>
+            <Form.Input
+              placeholder="Date"
+              name="date"
+              value={date}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              placeholder="Time"
+              name="time"
+              value={time}
+              onChange={this.handleChange}
+            />
           </Form.Group>
-
-          <Form.TextArea
-            onChange={this.handleChangeNotes}
-            label="Notes"
-            placeholder="Notes..."
-          />
-
+          <Form.Group>
+            <Form.Input
+              placeholder="Type"
+              name="type"
+              value={type}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              placeholder="Notes (optional)"
+              name="notes"
+              value={notes}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
           <Form.Button content="submit" />
         </Form>
       </Container>

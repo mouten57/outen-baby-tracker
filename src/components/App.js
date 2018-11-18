@@ -28,6 +28,7 @@ class App extends Component {
       allFeedings: []
     };
     this.diapersRef = firebase.database().ref('diapers/');
+    this.feedingsRef = firebase.database().ref('feedings/');
   }
 
   componentDidMount() {
@@ -37,11 +38,20 @@ class App extends Component {
       let diapers = this.state.allDiapers.concat(diaper);
       this.setDiapers(diapers);
     });
+    this.feedingsRef.on('child_added', snapshot => {
+      const feeding = snapshot.val();
+      feeding.key = snapshot.key;
+      let feedings = this.state.allFeedings.concat(feeding);
+      this.setFeedings(feedings);
+    });
   }
 
   setDiapers = diapers => {
     this.setState({ allDiapers: diapers });
-    console.log(this.state.allDiapers);
+  };
+
+  setFeedings = feedings => {
+    this.setState({ allFeedings: feedings });
   };
 
   render() {
@@ -74,7 +84,13 @@ class App extends Component {
             <Route
               exact
               path="/feedings"
-              render={props => <Feedings {...props} firebase={firebase} />}
+              render={props => (
+                <Feedings
+                  {...props}
+                  firebase={firebase}
+                  feedings={this.state.allFeedings}
+                />
+              )}
             />
             <Route
               exact

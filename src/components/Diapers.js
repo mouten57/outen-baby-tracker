@@ -3,28 +3,21 @@ import { Table } from 'semantic-ui-react';
 import AddButton from './AddButton';
 import _ from 'lodash';
 
-const tableData = [
-  { id: 1, date: '11/15/19', time: '1:35PM', type: 'poop', notes: 'none' },
-  { id: 2, date: '11/16/19', time: '2:35PM', type: 'pee', notes: 'none' },
-  { id: 3, date: '11/17/19', time: '3:35PM', type: 'poop', notes: 'none' },
-  { id: 4, date: '11/18/19', time: '4:35PM', type: 'pee', notes: 'none' },
-  { id: 5, date: '11/19/19', time: '5:35PM', type: 'poop', notes: 'none' },
-  { id: 6, date: '11/20/19', time: '6:35PM', type: 'both', notes: 'none' }
-];
-
 class Diapers extends Component {
   constructor(props) {
     super(props);
     this.state = {
       column: null,
-      data: tableData,
-      direction: null,
-      allDiapers: []
+      data: [],
+      direction: null
     };
   }
 
   componentDidMount() {
-    console.log(this.props.diapers);
+    this.setState({ data: this.props.diapers });
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: nextProps.diapers });
   }
 
   handleSort = clickedColumn => () => {
@@ -71,7 +64,7 @@ class Diapers extends Component {
                 sorted={column === 'type' ? direction : null}
                 onClick={this.handleSort('type')}
               >
-                Poop/Pee
+                Type (poop/pee)
               </Table.HeaderCell>
 
               <Table.HeaderCell
@@ -83,8 +76,8 @@ class Diapers extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {_.map(data, ({ id, date, time, type, notes }) => (
-              <Table.Row key={id}>
+            {_.map(data, ({ key, date, time, type, notes }) => (
+              <Table.Row key={key}>
                 <Table.Cell>{date}</Table.Cell>
                 <Table.Cell>{time}</Table.Cell>
                 <Table.Cell>{type}</Table.Cell>
