@@ -1,10 +1,10 @@
 var config = {
-  apiKey: 'AIzaSyDPAkMHw0FXy6Ix4-OrqtkgPIjWb2qS-Vc',
-  authDomain: 'baby-app-199fa.firebaseapp.com',
-  databaseURL: 'https://baby-app-199fa.firebaseio.com',
-  projectId: 'baby-app-199fa',
-  storageBucket: 'baby-app-199fa.appspot.com',
-  messagingSenderId: '643236783327'
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGE_KEY
 };
 
 export default config;

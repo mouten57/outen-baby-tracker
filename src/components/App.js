@@ -8,7 +8,10 @@ import Diapers from './Diapers';
 import Feedings from './Feedings';
 import AddDiaperForm from './AddDiaperForm';
 import AddFeedingForm from './AddFeedingForm';
-import firebase from 'firebase';
+
+import firebase from 'firebase/app';
+import 'firebase/database';
+
 import config from '../firebaseConfig';
 
 firebase.initializeApp(config);

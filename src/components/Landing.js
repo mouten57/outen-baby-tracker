@@ -4,7 +4,7 @@ import { Container, Image } from 'semantic-ui-react';
 
 const Landing = () => (
   <Container>
-    <Container text centered>
+    <Container text>
       <h2> Baby Tracker!</h2>
       <p>Keeping track of baby Monroe</p>
     </Container>
