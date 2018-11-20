@@ -14,7 +14,7 @@ class AddFeedingForm extends Component {
       date: new Date(),
       started: new Date(),
       finished: new Date(),
-      duration: '',
+
       LorR: '',
       notes: ''
     };
@@ -35,7 +35,7 @@ class AddFeedingForm extends Component {
       date: dateTime.date(this.state.date),
       started: dateTime.time(this.state.started),
       finished: dateTime.time(this.state.finished),
-      duration: this.state.duration,
+      duration: dateTime.duration(this.state.started, this.state.finished),
       LorR: this.state.LorR,
       notes: this.state.notes
     };
@@ -59,7 +59,7 @@ class AddFeedingForm extends Component {
   };
 
   render() {
-    const { duration, notes } = this.state;
+    const { notes } = this.state;
     return (
       <Container>
         <Form onSubmit={this.handleSubmitFeeding}>
@@ -91,7 +91,7 @@ class AddFeedingForm extends Component {
               onChange={this.onFinishedChange}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={15}
+              timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
             />
@@ -120,12 +120,12 @@ class AddFeedingForm extends Component {
             </Form.Field>
           </Form.Group>
           <Form.Group widths="equal" style={{ paddingTop: '10px' }}>
-            <Form.Input
+            {/* <Form.Input
               placeholder="Duration"
               name="duration"
               value={duration}
               onChange={this.handleChange}
-            />
+            /> */}
             <Form.Input
               placeholder="Notes (optional)"
               name="notes"

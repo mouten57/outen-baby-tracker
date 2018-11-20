@@ -30,6 +30,12 @@ const dateTime = {
     // ie: 2013-02-18, 8:35 AM
     time = h + ':' + min + ' ' + ampm;
     return time;
+  },
+  duration: function(time1, time2) {
+    let d1 = new Date(time1);
+    let d2 = new Date(time2);
+    var diff = Math.abs(d1 - d2);
+    return Math.round(diff / 60000) + ' minutes';
   }
 };
 
