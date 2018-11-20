@@ -72,7 +72,7 @@ class AddDiaperForm extends Component {
               onChange={this.onTimeChange}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={15}
+              timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
             />

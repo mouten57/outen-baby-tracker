@@ -78,7 +78,7 @@ class AddFeedingForm extends Component {
               onChange={this.onStartedChange}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={15}
+              timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
             />
