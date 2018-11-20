@@ -1,5 +1,5 @@
 const dateTime = {
-  date: timestamp => {
+  date: function(timestamp) {
     var d = new Date(timestamp), // Convert the passed timestamp to milliseconds
       yyyy = d.getFullYear(),
       mm = ('0' + (d.getMonth() + 1)).slice(-2), // Months are zero based. Add leading 0.
@@ -9,7 +9,7 @@ const dateTime = {
     time = mm + '/' + dd + '/' + yyyy;
     return time;
   },
-  time: timestamp => {
+  time: function(timestamp) {
     var d = new Date(timestamp), // Convert the passed timestamp to milliseconds
       hh = d.getHours(),
       h = hh,
@@ -26,6 +26,8 @@ const dateTime = {
     } else if (hh === 0) {
       h = 12;
     }
+
+    // ie: 2013-02-18, 8:35 AM
     time = h + ':' + min + ' ' + ampm;
     return time;
   }

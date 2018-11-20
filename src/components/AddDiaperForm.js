@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Container } from 'semantic-ui-react';
+import { Form, Container, Label, Radio } from 'semantic-ui-react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import dateTime from '../dateTime';
 
 class AddDiaperForm extends Component {
@@ -7,8 +10,8 @@ class AddDiaperForm extends Component {
     super(props);
     this.state = {
       allDiapers: [],
-      date: dateTime.date(Date.now()),
-      time: dateTime.time(Date.now()),
+      date: new Date(),
+      time: new Date(),
       type: '',
       notes: ''
     };
@@ -19,10 +22,13 @@ class AddDiaperForm extends Component {
     this.setState({ [name]: value });
   };
 
+  onDateChange = date => this.setState({ date });
+  onTimeChange = time => this.setState({ time });
+
   handleSubmitDiaper = () => {
     var submitData = {
-      date: this.state.date,
-      time: this.state.time,
+      date: dateTime.date(this.state.date),
+      time: dateTime.time(this.state.time),
       type: this.state.type,
       notes: this.state.notes
     };
@@ -46,39 +52,62 @@ class AddDiaperForm extends Component {
   };
 
   render() {
-    const { date, time, type, notes } = this.state;
+    const { notes } = this.state;
 
     return (
       <Container>
         <Form onSubmit={this.handleSubmitDiaper}>
-          <Form.Group widths="equal">
-            <Form.Input
-              placeholder="Date"
-              name="date"
-              value={date}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              placeholder="Time"
-              name="time"
-              value={time}
-              onChange={this.handleChange}
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Date</Label>
+            <DatePicker
+              selected={this.state.date}
+              onChange={this.onDateChange}
             />
           </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Input
-              placeholder="Type"
-              name="type"
-              value={type}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              placeholder="Notes (optional)"
-              name="notes"
-              value={notes}
-              onChange={this.handleChange}
+
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Time</Label>
+            <DatePicker
+              selected={this.state.time}
+              onChange={this.onTimeChange}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              dateFormat="h:mm aa"
+              timeCaption="Time"
             />
           </Form.Group>
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Type</Label>
+            <Form.Field>
+              <Radio
+                toggle
+                label="Poop"
+                name="type"
+                value="Poop"
+                checked={this.state.type === 'Poop'}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Radio
+                toggle
+                label="Pee"
+                name="type"
+                value="Pee"
+                checked={this.state.type === 'Pee'}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+          </Form.Group>
+          <Form.Input
+            placeholder="Notes (optional)"
+            name="notes"
+            style={{ paddingTop: '10px' }}
+            value={notes}
+            onChange={this.handleChange}
+          />
+
           <Form.Button content="submit" />
         </Form>
       </Container>

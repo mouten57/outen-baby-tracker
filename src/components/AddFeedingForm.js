@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Container, Radio } from 'semantic-ui-react';
+import { Form, Container, Radio, Label } from 'semantic-ui-react';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import dateTime from '../dateTime';
 
 class AddFeedingForm extends Component {
@@ -7,13 +11,14 @@ class AddFeedingForm extends Component {
     super(props);
     this.state = {
       allFeedings: [],
-      date: dateTime.date(Date.now()),
-      started: dateTime.time(Date.now()),
-      finished: '',
+      date: new Date(),
+      started: new Date(),
+      finished: new Date(),
       duration: '',
       LorR: '',
       notes: ''
     };
+
     this.feedingRef = this.props.firebase.database().ref('feedings/');
   }
 
@@ -21,11 +26,15 @@ class AddFeedingForm extends Component {
     this.setState({ [name]: value });
   };
 
+  onDateChange = date => this.setState({ date });
+  onStartedChange = started => this.setState({ started });
+  onFinishedChange = finished => this.setState({ finished });
+
   handleSubmitFeeding = () => {
     var submitData = {
-      date: this.state.date,
-      started: this.state.started,
-      finished: this.state.finished,
+      date: dateTime.date(this.state.date),
+      started: dateTime.time(this.state.started),
+      finished: dateTime.time(this.state.finished),
       duration: this.state.duration,
       LorR: this.state.LorR,
       notes: this.state.notes
@@ -50,24 +59,45 @@ class AddFeedingForm extends Component {
   };
 
   render() {
-    const { date, started, finished, duration, notes } = this.state;
+    const { duration, notes } = this.state;
     return (
       <Container>
         <Form onSubmit={this.handleSubmitFeeding}>
-          <Form.Group widths="equal">
-            <Form.Input
-              placeholder="Date"
-              name="date"
-              value={date}
-              onChange={this.handleChange}
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Date</Label>
+            <DatePicker
+              selected={this.state.date}
+              onChange={this.onDateChange}
             />
-            {/* <Form.Input
-              placeholder="Left or Right"
-              name="LorR"
-              value={LorR}
-              onChange={this.handleChange}
-            /> */}
+          </Form.Group>
 
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Start</Label>
+            <DatePicker
+              selected={this.state.started}
+              onChange={this.onStartedChange}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              dateFormat="h:mm aa"
+              timeCaption="Time"
+            />
+          </Form.Group>
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Finish</Label>
+
+            <DatePicker
+              selected={this.state.finished}
+              onChange={this.onFinishedChange}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              dateFormat="h:mm aa"
+              timeCaption="Time"
+            />
+          </Form.Group>
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Side</Label>
             <Form.Field>
               <Radio
                 toggle
@@ -89,21 +119,7 @@ class AddFeedingForm extends Component {
               />
             </Form.Field>
           </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Input
-              placeholder="Start"
-              name="started"
-              value={started}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              placeholder="Finish"
-              name="finished"
-              value={finished}
-              onChange={this.handleChange}
-            />
-          </Form.Group>
-          <Form.Group widths="equal">
+          <Form.Group widths="equal" style={{ paddingTop: '10px' }}>
             <Form.Input
               placeholder="Duration"
               name="duration"
