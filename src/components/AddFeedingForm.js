@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Form, Container } from 'semantic-ui-react';
+import { Form, Container, Radio } from 'semantic-ui-react';
+import dateTime from '../dateTime';
 
 class AddFeedingForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allFeedings: [],
-      date: '',
-      started: '',
+      date: dateTime.date(Date.now()),
+      started: dateTime.time(Date.now()),
       finished: '',
       duration: '',
       LorR: '',
@@ -49,7 +50,7 @@ class AddFeedingForm extends Component {
   };
 
   render() {
-    const { date, started, finished, duration, LorR, notes } = this.state;
+    const { date, started, finished, duration, notes } = this.state;
     return (
       <Container>
         <Form onSubmit={this.handleSubmitFeeding}>
@@ -60,12 +61,33 @@ class AddFeedingForm extends Component {
               value={date}
               onChange={this.handleChange}
             />
-            <Form.Input
+            {/* <Form.Input
               placeholder="Left or Right"
               name="LorR"
               value={LorR}
               onChange={this.handleChange}
-            />
+            /> */}
+
+            <Form.Field>
+              <Radio
+                toggle
+                label="Left"
+                name="LorR"
+                value="Left"
+                checked={this.state.LorR === 'Left'}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Radio
+                toggle
+                label="Right"
+                name="LorR"
+                value="Right"
+                checked={this.state.LorR === 'Right'}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
           </Form.Group>
           <Form.Group widths="equal">
             <Form.Input

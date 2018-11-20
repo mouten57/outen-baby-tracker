@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Form, Container } from 'semantic-ui-react';
+import dateTime from '../dateTime';
 
 class AddDiaperForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allDiapers: [],
-      date: '',
-      time: '',
+      date: dateTime.date(Date.now()),
+      time: dateTime.time(Date.now()),
       type: '',
       notes: ''
     };
