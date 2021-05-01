@@ -46,7 +46,7 @@ class Feedings extends Component {
       <div>
         <h2 style={{ display: 'inline-block', marginTop: '3px' }}>Feedings</h2>
         <AddButton link="/feedings/add" />
-        <Table sortable celled fixed>
+        <Table sortable celled fixed unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell

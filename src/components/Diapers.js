@@ -46,7 +46,7 @@ class Diapers extends Component {
       <div>
         <h2 style={{ display: 'inline-block', marginTop: '3px' }}>Diapers</h2>
         <AddButton link="/diapers/add" />
-        <Table sortable celled fixed>
+        <Table sortable celled fixed unstackable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell
