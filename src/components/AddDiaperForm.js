@@ -62,6 +62,7 @@ class AddDiaperForm extends Component {
             <DatePicker
               selected={this.state.date}
               onChange={this.onDateChange}
+              onFocus={e => e.target.blur()}
             />
           </Form.Group>
 
@@ -75,6 +76,7 @@ class AddDiaperForm extends Component {
               timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
+              onFocus={e => e.target.blur()}
             />
           </Form.Group>
           <Form.Group style={{ paddingTop: '10px' }}>

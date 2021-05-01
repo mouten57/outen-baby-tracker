@@ -74,6 +74,7 @@ class AddFeedingForm extends Component {
             <DatePicker
               selected={this.state.date}
               onChange={this.onDateChange}
+              onFocus={e => e.target.blur()}
             />
           </Form.Group>
 <Divider />
@@ -101,6 +102,7 @@ class AddFeedingForm extends Component {
               timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
+              onFocus={e => e.target.blur()}
             />
           </Form.Group>
           <Form.Group style={{ paddingTop: '10px' }}>
@@ -114,6 +116,7 @@ class AddFeedingForm extends Component {
               timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
+              onFocus={e => e.target.blur()}
             />
 
           </Form.Group>
@@ -130,6 +133,7 @@ class AddFeedingForm extends Component {
               timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
+              onFocus={e => e.target.blur()}
             />
           </Form.Group>
           <Form.Group style={{ paddingTop: '10px' }}>
@@ -143,6 +147,7 @@ class AddFeedingForm extends Component {
               timeIntervals={5}
               dateFormat="h:mm aa"
               timeCaption="Time"
+              onFocus={e => e.target.blur()}
             />
 
           </Form.Group>
