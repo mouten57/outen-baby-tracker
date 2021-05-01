@@ -14,10 +14,12 @@ class Diapers extends Component {
   }
 
   componentDidMount() {
-    this.setState({ data: this.props.diapers });
+    const data = this.props.diapers.reverse()
+    this.setState({ data });
   }
   componentWillReceiveProps(nextProps) {
-    this.setState({ data: nextProps.diapers });
+    const data = nextProps.diapers.reverse()
+    this.setState({ data });
   }
 
   handleSort = clickedColumn => () => {

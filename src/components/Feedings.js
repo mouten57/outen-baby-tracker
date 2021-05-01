@@ -11,15 +11,19 @@ class Feedings extends Component {
   };
 
   componentDidMount() {
-    this.setState({ data: this.props.feedings });
+    const data = this.props.feedings.reverse()
+    this.setState({ data });
+
   }
   componentWillReceiveProps(nextProps) {
-    this.setState({ data: nextProps.feedings });
+    const data = nextProps.feedings.reverse()
+    this.setState({ data });
+
+
   }
 
   handleSort = clickedColumn => () => {
     const { column, data, direction } = this.state;
-
     if (column !== clickedColumn) {
       this.setState({
         column: clickedColumn,
@@ -37,6 +41,7 @@ class Feedings extends Component {
   };
   render() {
     const { column, data, direction } = this.state;
+    console.log(this.state)
     return (
       <div>
         <h2 style={{ display: 'inline-block', marginTop: '3px' }}>Feedings</h2>
@@ -51,28 +56,16 @@ class Feedings extends Component {
                 Date
               </Table.HeaderCell>
               <Table.HeaderCell
-                sorted={column === 'started' ? direction : null}
-                onClick={this.handleSort('started')}
+                sorted={column === 'totalL' ? direction : null}
+                onClick={this.handleSort('totalL')}
               >
-                Started
+               Total Left (min)
               </Table.HeaderCell>
               <Table.HeaderCell
-                sorted={column === 'finished' ? direction : null}
-                onClick={this.handleSort('finished')}
+                sorted={column === 'totalR' ? direction : null}
+                onClick={this.handleSort('totalR')}
               >
-                Finished
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                sorted={column === 'duration' ? direction : null}
-                onClick={this.handleSort('duration')}
-              >
-                Duration
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                sorted={column === 'LorR' ? direction : null}
-                onClick={this.handleSort('LorR')}
-              >
-                Boob
+                Total Right (min)
               </Table.HeaderCell>
               <Table.HeaderCell
                 sorted={column === 'notes' ? direction : null}
@@ -85,13 +78,11 @@ class Feedings extends Component {
           <Table.Body>
             {_.map(
               data,
-              ({ key, date, started, finished, duration, LorR, notes }) => (
+              ({ key, date, totalInputLeft, totalInputRight, notes }) => (
                 <Table.Row key={key}>
                   <Table.Cell>{date}</Table.Cell>
-                  <Table.Cell>{started}</Table.Cell>
-                  <Table.Cell>{finished}</Table.Cell>
-                  <Table.Cell>{duration}</Table.Cell>
-                  <Table.Cell>{LorR}</Table.Cell>
+                  <Table.Cell>{totalInputLeft}</Table.Cell>
+                  <Table.Cell>{totalInputRight}</Table.Cell>
                   <Table.Cell>{notes}</Table.Cell>
                 </Table.Row>
               )

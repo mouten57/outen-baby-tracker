@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Container, Radio, Label } from 'semantic-ui-react';
+import { Form, Container, Radio, Label, Grid, Divider } from 'semantic-ui-react';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -12,10 +12,12 @@ class AddFeedingForm extends Component {
     this.state = {
       allFeedings: [],
       date: new Date(),
-      started: new Date(),
-      finished: new Date(),
-
-      LorR: '',
+      startedL: new Date(),
+      finishedL: new Date(),
+      startedR: new Date(),
+      finishedR: new Date(),
+      totalInputLeft: "",
+      totalInputRight:"",
       notes: ''
     };
 
@@ -27,17 +29,20 @@ class AddFeedingForm extends Component {
   };
 
   onDateChange = date => this.setState({ date });
-  onStartedChange = started => this.setState({ started });
-  onFinishedChange = finished => this.setState({ finished });
+  onStartedChange = (started, side) => { side=="L" ? this.setState({ startedL: started }) : this.setState({ startedR: started })};
+  onFinishedChange = (finished, side) => { side=="L" ? this.setState({ finishedL: finished }) : this.setState({ finishedR: finished })};
 
   handleSubmitFeeding = () => {
+    const {date, startedL, finishedL, startedR, finishedR, totalInputLeft, totalInputRight, notes} = this.state
     var submitData = {
-      date: dateTime.date(this.state.date),
-      started: dateTime.time(this.state.started),
-      finished: dateTime.time(this.state.finished),
-      duration: dateTime.duration(this.state.started, this.state.finished),
-      LorR: this.state.LorR,
-      notes: this.state.notes
+      date: dateTime.date(date),
+      startedL: dateTime.time(startedL),
+      finishedL: dateTime.time(finishedL),
+      startedR: dateTime.time(startedR),
+      finishedR: dateTime.time(finishedR),
+      totalInputLeft: totalInputLeft == "" ? dateTime.duration(startedL, finishedL) : totalInputLeft,
+      totalInputRight: totalInputRight == "" ? dateTime.duration(startedR, finishedR) : totalInputRight,
+      notes
     };
 
     var newFeedingKey = this.feedingRef.push().key;
@@ -59,9 +64,10 @@ class AddFeedingForm extends Component {
   };
 
   render() {
-    const { notes } = this.state;
+    console.log(this.state)
+    const { notes, totalInputLeft, totalInputRight } = this.state;
     return (
-      <Container>
+      <Container stretched>
         <Form onSubmit={this.handleSubmitFeeding}>
           <Form.Group style={{ paddingTop: '10px' }}>
             <Label>Date</Label>
@@ -70,11 +76,54 @@ class AddFeedingForm extends Component {
               onChange={this.onDateChange}
             />
           </Form.Group>
+<Divider />
+<Grid columns={2} divided >
+<Grid.Row stretched>
 
+      <Grid.Column>
+      <Label color='pink'size='big'> Left</Label>
+      </Grid.Column>
+      <Grid.Column>
+      <Label color='blue' size='big'>Right</Label>
+      </Grid.Column>
+  </Grid.Row>
+
+  <Grid.Row stretched>
+  <Grid.Column>
+
+  <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Start</Label>
+            <DatePicker
+              selected={this.state.startedL}
+              onChange={(time)=> this.onStartedChange(time, 'L')}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={5}
+              dateFormat="h:mm aa"
+              timeCaption="Time"
+            />
+          </Form.Group>
+          <Form.Group style={{ paddingTop: '10px' }}>
+            <Label>Finish</Label>
+
+            <DatePicker
+              selected={this.state.finishedL}
+              onChange={(time)=>this.onFinishedChange(time, 'L')}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={5}
+              dateFormat="h:mm aa"
+              timeCaption="Time"
+            />
+
+          </Form.Group>
+          </Grid.Column>
+
+          <Grid.Column>
           <Form.Group style={{ paddingTop: '10px' }}>
             <Label>Start</Label>
             <DatePicker
-              selected={this.state.started}
+              selected={this.state.startedR}
               onChange={this.onStartedChange}
               showTimeSelect
               showTimeSelectOnly
@@ -87,7 +136,7 @@ class AddFeedingForm extends Component {
             <Label>Finish</Label>
 
             <DatePicker
-              selected={this.state.finished}
+              selected={this.state.finishedR}
               onChange={this.onFinishedChange}
               showTimeSelect
               showTimeSelectOnly
@@ -95,37 +144,47 @@ class AddFeedingForm extends Component {
               dateFormat="h:mm aa"
               timeCaption="Time"
             />
+
           </Form.Group>
-          <Form.Group style={{ paddingTop: '10px' }}>
-            <Label>Side</Label>
-            <Form.Field>
-              <Radio
-                toggle
-                label="Left"
-                name="LorR"
-                value="Left"
-                checked={this.state.LorR === 'Left'}
-                onChange={this.handleChange}
-              />
-            </Form.Field>
-            <Form.Field>
-              <Radio
-                toggle
-                label="Right"
-                name="LorR"
-                value="Right"
-                checked={this.state.LorR === 'Right'}
-                onChange={this.handleChange}
-              />
-            </Form.Field>
-          </Form.Group>
-          <Form.Group widths="equal" style={{ paddingTop: '10px' }}>
-            {/* <Form.Input
-              placeholder="Duration"
-              name="duration"
-              value={duration}
+          </Grid.Column>
+
+  </Grid.Row>
+  <Grid.Row>
+    <Grid.Column>
+    <Divider horizontal>Or</Divider>
+    <Form.Group widths='equal'>
+    <Form.Input
+              placeholder="Total Time"
+              name="totalInputLeft"
+              value={totalInputLeft}
               onChange={this.handleChange}
-            /> */}
+              stretched
+             style={{height: '60px'}}
+
+            />
+    </Form.Group>
+    </Grid.Column>
+    <Grid.Column>
+    <Divider horizontal>Or</Divider>
+    <Form.Group widths='equal'>
+    <Form.Input
+              placeholder="Total Time"
+              name="totalInputRight"
+              value={totalInputRight}
+              onChange={this.handleChange}
+              stretched
+             style={{height: '60px'}}
+
+            />
+    </Form.Group>
+    </Grid.Column>
+  </Grid.Row>
+
+</Grid>
+
+
+
+          <Form.Group widths="equal" style={{ paddingTop: '10px' }}>
             <Form.Input
               placeholder="Notes (optional)"
               name="notes"
