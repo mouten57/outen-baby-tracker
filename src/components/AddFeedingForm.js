@@ -63,6 +63,8 @@ class AddFeedingForm extends Component {
     }
   };
 
+  const 
+
   render() {
     console.log(this.state)
     const { notes, totalInputLeft, totalInputRight } = this.state;
@@ -99,7 +101,7 @@ class AddFeedingForm extends Component {
               onChange={(time)=> this.onStartedChange(time, 'L')}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={5}
+              timeIntervals={1}
               dateFormat="h:mm aa"
               timeCaption="Time"
               onFocus={e => e.target.blur()}
@@ -113,7 +115,7 @@ class AddFeedingForm extends Component {
               onChange={(time)=>this.onFinishedChange(time, 'L')}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={5}
+              timeIntervals={1}
               dateFormat="h:mm aa"
               timeCaption="Time"
               onFocus={e => e.target.blur()}
@@ -130,7 +132,7 @@ class AddFeedingForm extends Component {
               onChange={this.onStartedChange}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={5}
+              timeIntervals={1}
               dateFormat="h:mm aa"
               timeCaption="Time"
               onFocus={e => e.target.blur()}
@@ -144,7 +146,7 @@ class AddFeedingForm extends Component {
               onChange={this.onFinishedChange}
               showTimeSelect
               showTimeSelectOnly
-              timeIntervals={5}
+              timeIntervals={1}
               dateFormat="h:mm aa"
               timeCaption="Time"
               onFocus={e => e.target.blur()}

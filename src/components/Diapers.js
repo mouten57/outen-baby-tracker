@@ -66,7 +66,7 @@ class Diapers extends Component {
                 sorted={column === 'type' ? direction : null}
                 onClick={this.handleSort('type')}
               >
-                Type (poop/pee)
+                Type
               </Table.HeaderCell>
 
               <Table.HeaderCell

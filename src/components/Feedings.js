@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Icon } from 'semantic-ui-react';
 import AddButton from './AddButton';
 import _ from 'lodash';
 
@@ -52,26 +52,34 @@ class Feedings extends Component {
               <Table.HeaderCell
                 sorted={column === 'date' ? direction : null}
                 onClick={this.handleSort('date')}
+                width={4}
               >
                 Date
               </Table.HeaderCell>
               <Table.HeaderCell
                 sorted={column === 'totalL' ? direction : null}
                 onClick={this.handleSort('totalL')}
+                width={3}
               >
-               Total Left (min)
+               Left (min)
               </Table.HeaderCell>
               <Table.HeaderCell
                 sorted={column === 'totalR' ? direction : null}
                 onClick={this.handleSort('totalR')}
+                width={3}
               >
-                Total Right (min)
+                Right (min)
               </Table.HeaderCell>
               <Table.HeaderCell
                 sorted={column === 'notes' ? direction : null}
                 onClick={this.handleSort('notes')}
+                width={5}
               >
                 Notes
+              </Table.HeaderCell>
+               <Table.HeaderCell
+               width={1}>
+              
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -84,6 +92,7 @@ class Feedings extends Component {
                   <Table.Cell>{totalInputLeft}</Table.Cell>
                   <Table.Cell>{totalInputRight}</Table.Cell>
                   <Table.Cell>{notes}</Table.Cell>
+                  <Table.Cell  textAlign='center' ><Icon name='delete'/></Table.Cell>
                 </Table.Row>
               )
             )}
