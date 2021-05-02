@@ -73,14 +73,14 @@ class Feedings extends Component {
               <Table.HeaderCell
                 sorted={column === 'notes' ? direction : null}
                 onClick={this.handleSort('notes')}
-                width={5}
+                width={6}
               >
                 Notes
               </Table.HeaderCell>
-               <Table.HeaderCell
+               {/* <Table.HeaderCell
                width={1}>
               
-              </Table.HeaderCell>
+              </Table.HeaderCell> */}
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -92,7 +92,7 @@ class Feedings extends Component {
                   <Table.Cell>{totalInputLeft}</Table.Cell>
                   <Table.Cell>{totalInputRight}</Table.Cell>
                   <Table.Cell>{notes}</Table.Cell>
-                  <Table.Cell  textAlign='center' ><Icon name='delete'/></Table.Cell>
+                  {/* <Table.Cell  textAlign='center' ><Icon name='delete'/></Table.Cell> */}
                 </Table.Row>
               )
             )}
